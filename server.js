@@ -111,19 +111,21 @@ app.get('/articles', function(req, res){
 app.get('/articles/:id', function(req, res){
 	// using the id passed in the id parameter, 
 	// prepare a query that finds the matching one in our db...
-	Article.findOne({'_id': req.params.id})
-	// and populate all of the notes associated with it.
-	.populate('note')
+	db.scrapedData.find({'_id':req.params.id},
+	// // and populate all of the notes associated with it.
+	// .create('note')
 	// now, execute our query
-	.exec(function(err, doc){
+  function(err, found){
 		// log any errors
 		if (err){
 			console.log(err);
 		} 
 		// otherwise, send the doc to the browser as a json object
 		else {
-			res.json(doc);
-		}
+			// res.json(doc)
+
+     res.json(found);
+     		}
 	});
 });
 
@@ -145,7 +147,7 @@ app.post('/articles/:id', function(req, res){
 			// using the Article id passed in the id parameter of our url, 
 			// prepare a query that finds the matching Article in our db
 			// and update it to make it's lone note the one we just saved
-			Article.findOneAndUpdate({'_id': req.params.id}, {'note':doc._id})
+			db.NoteSchema.findOne({'note':doc._id})
 			// execute the above query
 			.exec(function(err, doc){
 				// log any errors

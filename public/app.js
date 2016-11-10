@@ -1,3 +1,4 @@
+
 // grab the articles as a json
 $.getJSON('/articles', function(data) {
   // for each one
@@ -10,10 +11,10 @@ $.getJSON('/articles', function(data) {
 
 // whenever someone clicks a p tag
 $(document).on('click', 'p', function(){
-  // empty the notes from the note section
   $('#notes').empty();
   // save the id from the p tag
-  var thisId = $(this).attr('data-id');
+  thisId = $(this).attr('data-id');
+   console.log(thisId);
 
   // now make an ajax call for the Article
   $.ajax({
@@ -22,7 +23,6 @@ $(document).on('click', 'p', function(){
   })
     // with that done, add the note information to the page
     .done(function( data ) {
-      console.log(data);
       // the title of the article
       $('#notes').append('<h2>' + data.title + '</h2>'); 
       // an input to enter a new title
@@ -44,8 +44,9 @@ $(document).on('click', 'p', function(){
 
 // when you click the savenote button
 $(document).on('click', '#savenote', function(){
+  thisId = $(this).attr('data-id');
   // grab the id associated with the article from the submit button
-  var thisId = $(this).attr('data-id');
+  console.log(thisId + " round2")
 
   // run a POST request to change the note, using what's entered in the inputs
   $.ajax({
